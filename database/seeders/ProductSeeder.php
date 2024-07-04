@@ -2,8 +2,10 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Product;
+use App\Models\Stock; // Make sure to import the Stock model
 use Illuminate\Database\Seeder;
+use Faker\Factory as Faker;
 
 class ProductSeeder extends Seeder
 {
@@ -12,6 +14,25 @@ class ProductSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        // Generate 50 products using the Product factory
+        $products = Product::factory()->count(50)->create();
+
+        // Iterate through each product
+        foreach ($products as $product) {
+            // Create a stock entry for each product
+            $product->stocks()->create([
+                'quantity' => rand(1, 10),
+                'attributes' => json_encode([
+                    [
+                        'attribute_id' => 1,
+                        'value_id' => rand(1, 5),
+                    ],
+                    [
+                        'attribute_id' => 2,
+                        'value_id' => rand(6, 7),
+                    ],
+                ]),
+            ]);
+        }
     }
 }
