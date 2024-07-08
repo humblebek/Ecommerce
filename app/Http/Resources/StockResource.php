@@ -23,6 +23,9 @@ class StockResource extends JsonResource
         $attributes = json_decode($this->attributes);
 
         foreach ($attributes as $StockAttribute) {
+
+            /* TODO cache it*/
+
             $attribute = Attribute::find($StockAttribute->attribute_id);
             $value = Value::find($StockAttribute->value_id);
 
